@@ -1,0 +1,62 @@
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* next;
+    Node* random;
+    
+    Node(int _val) {
+        val = _val;
+        next = NULL;
+        random = NULL;
+    }
+};
+*/
+
+class Solution {
+    
+public:
+
+void InsertAttail(Node * &head ,Node* &tail , int data){
+
+      Node *newnode = new Node(data);
+      tail->next = newnode;
+      tail = newnode;
+    }
+
+    Node* copyRandomList(Node* head) {
+        Node *temp = head;
+        Node *newhead = new Node(-1);
+        Node *newtail = newhead;
+       
+    while(temp != NULL){
+        int val = temp->val;
+        InsertAttail(newhead ,newtail , val);
+        temp = temp->next;
+    }     
+     newhead = newhead->next;
+
+        unordered_map <Node* , Node*> mp;
+        Node *old = head;
+        Node* new1 = newhead;
+
+
+     while(old != NULL  && new1 != NULL){
+                mp[old] = new1;
+                old = old->next;
+                new1 = new1->next;
+     }
+        old = head;
+        new1 = newhead;
+
+        while(old != NULL){
+             
+             new1->random = mp[old->random];
+             old = old->next;
+             new1 = new1->next;
+        }
+
+        return newhead;
+    }
+};
